@@ -1,2 +1,6 @@
-package com.f42o.api.user;public enum Role {
+package com.f42o.api.user;
+
+public enum Role {
+    USER,
+    ADMIN
 }
