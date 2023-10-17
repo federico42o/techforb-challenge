@@ -1,0 +1,25 @@
+.home_layout {
+    height: 100vh;
+    width: 100vw;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-template-rows:  0.2fr 1.5fr 1fr; 
+    gap: 1rem 1rem; 
+    grid-template-areas: 
+      "sidebar topbar topbar topbar"
+      "sidebar main main main"
+      "sidebar main main main"; 
+  }
+  .sidebar {
+     grid-area: sidebar; 
+     height: 100%;
+    
+    }
+  .topbar { grid-area: topbar; }
+  .main { 
+    grid-area: main; 
+    margin: 1rem 1rem 1rem 0;
+}
+
+
+  

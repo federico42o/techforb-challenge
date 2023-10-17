@@ -1,0 +1,18 @@
+<div class="home_layout">
+    <aside class="sidebar">
+
+        <app-sidebar/>
+    </aside>
+    
+    <div *ngIf="user" class="topbar">
+        
+        Bienvenido {{user.fullName}}
+        <button (click)="logout()">
+            Cerrar sesión
+        </button>
+    </div>
+    <main class="main">
+        <router-outlet/>
+
+    </main>    
+</div>

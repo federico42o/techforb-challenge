@@ -1,0 +1,42 @@
+<div class="page">
+    <section class="left_side">
+
+    </section>
+    <section class="right_side">
+        <form class="form"  [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="input_box">
+                <label for="type" [ngClass]="{'float_label':isTypeFocused}">Tipo de documento</label>
+                <select id="type" formControlName="credentialType" type="text" class="input" (blur)="isTypeFocused = true" (focus)="isTypeFocused = true">
+                    <option selected disabled="true">
+
+                    </option>
+                    <option class="" value="DNI">
+                        DNI
+                    </option>
+                    <option class="" value="LE">
+                        LE
+                </option>
+                <option class="" value="LC">
+                    LC
+            </option>
+                </select>
+            </div>
+            <div class="input_box"> 
+                <label for="dni" [ngClass]="{'float_label':isDniFocused}">Número de documento</label>
+                <input id="dni" formControlName="credentialNumber" type="text" class="input" (blur)="isDniFocused = true" (focus)="isDniFocused = true">
+            </div>
+            <div class="input_box">
+                <label for="password" [class.float_label]="isPasswordFocused">Clave</label>
+                <input id="password" formControlName="password" type="password" class="input" (blur)="isPasswordFocused = true" (focus)="isPasswordFocused = true">
+            </div>
+            <button class="button" type="submit">
+                    Ingresar
+            </button>
+        </form>
+
+
+        <div class="have_account">
+            ¿No tienes una cuenta? Registrate <a routerLink="/auth/register">aqui</a>
+        </div>
+    </section>
+</div>

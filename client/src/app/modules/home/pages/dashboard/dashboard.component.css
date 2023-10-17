@@ -1,0 +1,28 @@
+.main_dashboard{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.cards{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    flex-grow: 1;
+  }
+  .cards app-card {
+    flex: 1;
+  }
+
+  .mid_section{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .balance_graph{
+    width: 60%;
+  }
+  .last_transactions{
+    flex-grow: 1;
+  }
