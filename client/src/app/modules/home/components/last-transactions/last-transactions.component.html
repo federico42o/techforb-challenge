@@ -1,13 +1,32 @@
 <div class="main">
-    <h2>Mi saldo</h2>
-    <p>$123.1234</p>
-
-    <div class="card_info">
-        <p>**** **** **** 1234</p>
+    <h2>Ultimas transacciones</h2>
+    <div *ngFor="let transaction of transactions" class="transaction_table">
+        <div class="transaction_icon">
+            <img [src]="icon[transaction.transactionType]" [alt]="transaction.transactionType" width="24">
+        </div>
         <div>
-
-            <p>SILVA ALAN FEDERICO</p>
-            <p>10/23</p>
+            <p>{{transaction.destinationAccount?.fullName}}</p>
+            <p>{{transaction.transactionType}}</p>
+        </div>
+        <div>
+            <p>{{transaction.amount | currency}}</p>
+        </div>
+        <div>
+            <p>{{transaction.timestamp | date:'medium'}}</p>
+        </div>
+        <div>
+            <p [style.color]="statusColor[transaction.status]">{{transaction.status}}</p>
+        </div>
+    </div>
+    
+    <div class="paginator">
+        <div class="paginator_info">
+            <p>Mostrando {{size}} de {{totalElements}}</p>
+        </div>
+        <div class="paginator_buttons">
+        <button (click)="prevPage()">prev</button>
+        <div class="current_page">{{page+1}}</div>
+        <button (click)="nextPage()">next</button>
         </div>
     </div>
 </div>

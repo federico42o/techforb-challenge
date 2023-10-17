@@ -1,28 +1,16 @@
 <div class="base">
     <nav class="nav">
-        <li routerLink="/dashboard">
-            Inicio
+        <li *ngFor="let item of menuItems">
+            <div class="menu_item" [routerLink]="'/'+item.title">
+                <span [ngClass]="item.className">{{item.icon}}</span>
+                {{item.title | titlecase}}
+            </div>
         </li>
-        <li routerLink="/">
-            Tarjetas
-        </li>
-        <li routerLink="/">
-            Operaciones
-        </li>
-        <li  routerLink="/">
-            Beneficios
-        </li>
-        <li  routerLink="/  ">
-            Seguros
-        </li>
-        <li>
-            Inicio
-        </li>
-        <li>
-            Inicio
-        </li>
-        <li>
-            Cerrar sesion
+        <li >
+            <div class="menu_item" (click)="logout()">
+                <span class="material-symbols-outlined">logout</span>
+                Cerrar sesión
+            </div>
         </li>
     </nav>
 </div>

@@ -7,7 +7,10 @@ const routes: Routes = [
   {path:"",
   component:HomeComponent,
   children:[
-    {path:"dashboard",component:DashboardComponent}
+    {path:"inicio",component:DashboardComponent},
+    {path:"tarjetas",component:DashboardComponent},
+    {path:"operaciones",component:DashboardComponent},
+    {path:"ayuda",component:DashboardComponent},
   ]
 },
 ];

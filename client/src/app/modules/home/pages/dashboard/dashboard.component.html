@@ -1,7 +1,7 @@
 <div class="main_dashboard">
 <section class="cards">
     <!-- TODO articles -->
-    <app-card></app-card>
+    <app-card [user]="user"></app-card>
     <app-card></app-card>
     <app-card></app-card>
 
@@ -13,7 +13,7 @@
     </div>
 
     <div class="last_transactions">
-        <app-last-transactions/>
+        <app-last-transactions [user]="user"/>
     </div>
 </section>
 <section class="table">

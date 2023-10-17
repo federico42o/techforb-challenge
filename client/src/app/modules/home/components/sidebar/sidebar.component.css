@@ -16,9 +16,17 @@
     height: 100%;
 }
 nav li{
-    padding: 1rem 3rem;
+    cursor: pointer;
+    padding: 1rem 1rem 1rem 3rem;
     width: 100%;
 }
 nav li:hover{
     background-color: #2b2b2b;
+}
+
+.menu_item{
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    align-items: center;
 }

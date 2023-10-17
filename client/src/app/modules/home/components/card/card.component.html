@@ -1,13 +1,29 @@
-<div class="main">
-    <h2>Mi saldo</h2>
-    <p>$123.1234</p>
-
-    <div class="card_info">
-        <p>**** **** **** 1234</p>
-        <div>
-
-            <p>SILVA ALAN FEDERICO</p>
-            <p>10/23</p>
-        </div>
+<div class="main" *ngIf="favCard">
+    <div class="card_header">
+        <p class="helper">Mi saldo</p>
+        <p class="data">$123.1234</p>
     </div>
+
+
+        <div class="card_number">
+            
+            <p>{{formatCardNumber(favCard.cardNumber)}}</p>
+        </div>
+        <div class="card_footer">
+            <div class="card_name">
+                <p class="helper">Titular</p>
+                <p class="data">{{favCard.cardHolderName}}</p>
+            </div>
+            <div class="card_date">
+                <p class="helper">Válido hasta</p>
+
+                <p class="data">{{favCard.expirationDate | date:'MM/YY'}}</p>
+            </div>
+            <div class="card_cvv">
+                <p class="helper">CVV</p>
+
+                <p class="data">{{favCard.cvv}}</p>
+            </div>
+        </div>
+
 </div>

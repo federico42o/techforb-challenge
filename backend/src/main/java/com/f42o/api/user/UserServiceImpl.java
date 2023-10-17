@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService{
                 ()->new RuntimeException("User doesn't exist.")
         );
         return UserResponse.builder()
+                .id(user.getId())
                 .credentialNumber(user.getCredentialNumber())
                 .credentialType(user.getCredentialType())
                 .fullName(user.getFullName())
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByCredentialNumber(credential).orElseThrow(
                 ()-> new RuntimeException("User doesn't exist."));
         return UserResponse.builder()
+                .id(user.getId())
                 .fullName(user.getFullName())
                 .credentialType(user.getCredentialType())
                 .credentialNumber(user.getCredentialNumber())
