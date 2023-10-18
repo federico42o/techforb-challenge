@@ -1,9 +1,9 @@
 package com.f42o.api.auth;
 
-import com.f42o.api.account.AccountRepository;
+import com.f42o.api.account.AccountService;
 import com.f42o.api.account.BankAccount;
 import com.f42o.api.card.Card;
-import com.f42o.api.card.CardRepository;
+import com.f42o.api.card.CardService;
 import com.f42o.api.jwt.JwtService;
 import com.f42o.api.user.Role;
 import com.f42o.api.user.User;
@@ -22,11 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class AuthService {
     private final UserRepository userRepository;
-    private final AccountRepository bankAccountRepository;
-    private final CardRepository cardRepository;
+    private final AccountService accountService;
+    private final CardService cardService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+
 
     @Transactional
     public void register(RegisterRequest request){
@@ -43,8 +44,9 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build());
         BankAccount bankAccount = new BankAccount(user);
-        cardRepository.save(new Card(user.getFullName(),bankAccount));
-        bankAccountRepository.save(bankAccount);
+        accountService.createBankAccount(bankAccount);
+        cardService.createCard(new Card(user.getFullName(),bankAccount));
+
     }
 
     public AuthResponse login(LoginRequest request){

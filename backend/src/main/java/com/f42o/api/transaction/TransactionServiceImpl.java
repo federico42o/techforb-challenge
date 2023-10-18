@@ -3,6 +3,9 @@ package com.f42o.api.transaction;
 import com.f42o.api.account.AccountRepository;
 import com.f42o.api.account.BankAccount;
 import com.f42o.api.account.BankAccountDTO;
+import com.f42o.api.balance.BalanceService;
+import com.f42o.api.balance.BalanceSnapshot;
+import com.f42o.api.balance.BalanceSnapshotRepository;
 import com.f42o.api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,6 +26,7 @@ public class TransactionServiceImpl implements TransactionService{
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final BalanceService balanceService;
 
     @Transactional
     @Override
@@ -39,8 +43,11 @@ public class TransactionServiceImpl implements TransactionService{
         withdrawTransaction.setAmount(amount);
         withdrawTransaction.setSourceAccount(source);
         withdrawTransaction.executeTransaction();
+        withdrawTransaction.setClient(source.getClient());
         transactionRepository.save(withdrawTransaction);
-        accountRepository.save(source);
+        BankAccount updatedAccount = accountRepository.save(source);
+        balanceService.snapshotBalance(updatedAccount);
+
     }
 
     @Transactional
@@ -57,8 +64,9 @@ public class TransactionServiceImpl implements TransactionService{
         depositTransaction.setDestinationAccount(destination);
         depositTransaction.executeTransaction();
         depositTransaction.setClient(destination.getClient());
-        accountRepository.save(destination);
+        BankAccount updatedAccount = accountRepository.save(destination);
         transactionRepository.save(depositTransaction);
+        balanceService.snapshotBalance(updatedAccount);
 
 
     }
@@ -83,9 +91,11 @@ public class TransactionServiceImpl implements TransactionService{
         transferTransaction.setAmount(amount);
         transferTransaction.executeTransaction();
         transferTransaction.setClient(source.getClient());
-        accountRepository.save(source);
-        accountRepository.save(destination);
+        BankAccount updatedSrcAccount = accountRepository.save(source);
+        BankAccount updatedAccount = accountRepository.save(destination);
         transactionRepository.save(transferTransaction);
+        balanceService.snapshotBalance(updatedSrcAccount);
+        balanceService.snapshotBalance(updatedAccount);
 
 
     }
@@ -116,6 +126,9 @@ public class TransactionServiceImpl implements TransactionService{
         );
         return new PageImpl<>(response,pageable,transactions.getTotalElements());
     }
+
+
+
 
 
     private BankAccountDTO buildDto(BankAccount entity){

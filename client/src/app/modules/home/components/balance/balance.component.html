@@ -1,5 +1,16 @@
 <div class="chart_main">
-    <h2>Balance</h2>
+    <div class="chart_header">
+
+        <h2>Balance</h2>
+        <select (change)="applyFilter($event)">
+            <option value="WEEKLY" selected >
+                Esta semana
+            </option>
+            <option value="MONTHLY">
+                Este año
+            </option>
+        </select>
+    </div>
 <div class="chart-container" style="position: relative; width:100%;padding: 1rem;">
     <canvas id="bar-chart"></canvas>
 </div>

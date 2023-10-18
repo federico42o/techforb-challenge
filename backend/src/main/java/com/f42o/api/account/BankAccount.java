@@ -4,11 +4,14 @@ import com.f42o.api.user.User;
 import com.f42o.api.utils.Utils;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -21,15 +24,15 @@ public class BankAccount {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String CBU;
     private String ALIAS;
     @ManyToOne
     private User client;
     private BigDecimal balance;
     @CreationTimestamp
-    private Instant createdAt;
+    private LocalDateTime createdAt;
     private boolean isEnabled;
     public BankAccount() {
         this.balance = new BigDecimal(0);

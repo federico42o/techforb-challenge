@@ -1,18 +1,25 @@
 package com.f42o.api.account;
 
-import com.f42o.api.user.User;
+import com.f42o.api.balance.BalanceService;
 import com.f42o.api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
-public class AcountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService{
 
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final BalanceService balanceService;
+
+    @Override
+    public void createBankAccount(BankAccount bankAccount) {
+        if(bankAccount!=null){
+            accountRepository.save(bankAccount);
+            balanceService.snapshotBalance(bankAccount);
+        }
+    }
 
     @Override
     public BankAccountResponse getAccountByClientId(Long id) {

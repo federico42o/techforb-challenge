@@ -3,5 +3,10 @@
     color: #141414;
     border-radius: 12px;
     padding: 1rem;
+}
 
+.chart_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -1,6 +1,11 @@
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, Inject, Input, OnInit, inject } from '@angular/core';
 import { Chart,ChartData,registerables  } from 'chart.js';
 import { AccountService } from '../../services/account.service';
+import { BalanceService } from '../../services/balance.service';
+import { User } from 'src/app/models/user';
+import { Balance } from 'src/app/models/balance';
+import { BalanceType } from 'src/app/models/balance-type';
+import { AuthService } from 'src/app/modules/auth/services';
 Chart.register(...registerables);
 @Component({
   selector: 'app-balance',
@@ -8,85 +13,87 @@ Chart.register(...registerables);
   styleUrls: ['./balance.component.css']
 })
 export class BalanceComponent implements OnInit{
-  private accountService = inject(AccountService);
+  private authService = inject(AuthService)
+  private balanceService = inject(BalanceService);
+  user!:User;
   dataLoaded: boolean = false;
-  labelData!: any;
-  mainData!: any;
+  labelData!: string[];
+  valueData!: number[];
   chart!: any;
-  colors!: string[];
-  today:Date = new Date();
-  ctx:string = 'pie-chart'
-  todayString:string = this.today.toISOString().substring(0, 10);
-  yesterday:Date = new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate()-1);
+  balanceType:BalanceType = BalanceType.WEEKLY
+  
   ngOnInit(): void {
-      const labels = ["LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO","DOMINGO"]
-      this.createChart('bar-chart',labels);
+    this.authService.getCurrentUser().subscribe({
+      next:(user:User|null)=>{
+        if(user){
+          this.user = user;
+          this.loadData(user.id,this.setDate(BalanceType.WEEKLY),new Date());
+          
+        }
+
+      },
+      complete:()=>{
+        
+      }
+    })
+    
     }
   
-  createChart(id:string,labels:any): void {
-    const footer = (tooltipItems: any[]) => {
-      // Obtiene los valores de ambas barras
-      let balance = "";
-      // Calcula el balance (diferencia)
-      tooltipItems.forEach(
-        function(tooltipItem){
-          balance = ((tooltipItem.parsed.y - tooltipItem.parsed.x) * 100).toFixed(2)
-        }
-      )
-
-    
-    
-      return `%: ${balance}`;
-    };
+  createChart(id:string,labels:any,data:any): void {
     this.chart = new Chart(id, {
       type: 'bar',
       
       data: {
         labels: labels,
         datasets: [{
-          label: '# Semana anterior',
-          data: [15, 52, 52, 21, 25, 25, 23],
+          label: 'balance',
+          data: data,
           borderWidth: 1,
-          maxBarThickness: 50,
-          backgroundColor:"rgba(75, 192, 192)",
+          maxBarThickness: 30,
+          backgroundColor:"#76C1A1",
           
           
         },
-        {
-          label: '# Esta semana',
-          data: [25, 52, 51, 21, 256, 155, 42],
-          borderWidth: 1,
-          maxBarThickness: 50,
-          backgroundColor:"rgba(54, 162, 235)"
-          
-        },
-        
+       
       ]
       },
       options: {
         plugins:{
           tooltip:{
             padding:26,
-            callbacks: {
-              footer: footer,
-            }  
-            
+            callbacks:{
+              beforeTitle:function(context){
+                return "BALANCE"
+              },
+              title:function(context){
+                return context[0].label
+              },
+              afterTitle:function(context){
+
+                return Number(context[0].raw).toLocaleString("en-US",{style:"currency", currency:"USD"});
+              },
+              label:function(context){return}
+            }
+           
           },
           
-          title:{
-            text:"Balance"
-          }
+
         },
         scales: {
           y: {
             beginAtZero: true,
             grid:{
               lineWidth:3,
+            },
+            ticks:{
+              callback: function(value, index, values) {
+                return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
+              }
             }
           },
           x:{
             grid:{
-              display:false
+              display:true
             }
           }
 
@@ -100,22 +107,48 @@ export class BalanceComponent implements OnInit{
   applyFilter(event:Event):void{
     this.chart.destroy();
     const filterValue = (event.target as HTMLInputElement).value;
-    const date = new Date(filterValue)
-    this.loadData(date);
+    const end = new Date();
+    this.balanceType = filterValue == BalanceType.WEEKLY ? BalanceType.WEEKLY : BalanceType.MONTHLY 
+    this.loadData(this.user.id,this.setDate(filterValue),end);
   }
 
-  _updateData(date:string){
-    const newDate = new Date(date)
-    this.loadData(newDate);
-  }
-  setLabels(data: any[]): void {
-    this.labelData = data.map((d: any) => d.game);
+
+
+
+  loadData(clientId:string,start:Date,end:Date): void {
+
+      this.balanceService.getBalance(clientId,start,end,this.balanceType).subscribe({
+        next:(response:Balance)=>{
+          this.labelData = this.formatLabels(response.labels)
+          this.valueData = response.values
+        },
+        complete:()=>{
+          this.createChart('bar-chart',this.labelData,this.valueData);
+        }
+      })
+
   }
 
-  setMainData(data: any[]): void {
-    this.mainData = data.map((d: any) => d.totalTicketsSold);
+  formatLabels(labels:string[]){
+    return labels.map(l=>l.slice(0,3));
   }
-  loadData(date:Date): void {
+  formatValues(values: number[]): string[] {
+    return values.map(value => `$${value}`);
+  }
 
+
+  setDate(type:string) : Date{
+    const start = new Date();
+    if (type === "WEEKLY") {
+      const today = start.getUTCDay(); 
+      const daysToMonday = today === 0 ? 6 : today - 1; 
+      start.setUTCDate(start.getUTCDate() - daysToMonday); 
+      start.setUTCHours(0, 0, 0, 0); 
+    } else if (type === "MONTHLY") {
+      start.setUTCMonth(0, 1); 
+      start.setUTCHours(0, 0, 0, 0); 
+    }
+    console.log(start)
+    return start;
   }
 }

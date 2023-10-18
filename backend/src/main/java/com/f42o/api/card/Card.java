@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.UUID;
 
@@ -16,15 +17,15 @@ import java.util.UUID;
 public class Card {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String cardNumber;
     private LocalDate expirationDate;
     private String cardHolderName;
     private String CVV;
     private final String ISSUER = "4007";
 
-    private Instant createdAt;
+    private LocalDateTime createdAt;
     private boolean isEnabled;
     @ManyToOne
     private BankAccount bankAccount;
@@ -40,7 +41,7 @@ public class Card {
         this.expirationDate = LocalDate.now().plus(Period.ofYears(5));
         this.isEnabled = true;
         this.bankAccount = bankAccount;
-        this.createdAt = Instant.now();
+        this.createdAt = LocalDateTime.now();
     }
 
 
