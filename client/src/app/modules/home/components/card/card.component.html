@@ -1,7 +1,7 @@
 <div class="main" *ngIf="favCard">
     <div class="card_header">
         <p class="helper">Mi saldo</p>
-        <p class="data">$123.1234</p>
+        <p class="data" *ngIf="bankAccount">{{bankAccount.balance| currency}}</p>
     </div>
 
 

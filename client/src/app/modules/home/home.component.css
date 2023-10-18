@@ -2,8 +2,9 @@
     height: 100vh;
     display: grid; 
     grid-template-columns: .5fr repeat(3,1fr); 
-    grid-template-rows:  0.2fr 1.5fr 1fr; 
+    grid-template-rows:  auto 1.5fr 1fr; 
     gap: 1rem 1rem; 
+    background-color: #dbdbdb;
     grid-template-areas: 
       "sidebar topbar topbar topbar"
       "sidebar main main main"

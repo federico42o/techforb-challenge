@@ -56,6 +56,7 @@ public class TransactionServiceImpl implements TransactionService{
         depositTransaction.setAmount(amount);
         depositTransaction.setDestinationAccount(destination);
         depositTransaction.executeTransaction();
+        depositTransaction.setClient(destination.getClient());
         accountRepository.save(destination);
         transactionRepository.save(depositTransaction);
 

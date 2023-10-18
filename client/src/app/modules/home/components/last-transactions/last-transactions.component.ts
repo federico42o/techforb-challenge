@@ -53,7 +53,7 @@ export class LastTransactionsComponent implements OnInit,OnChanges {
     })
   }
 
-  pagination(currentPage:number){
+  private pagination(currentPage:number){
     this.page = currentPage;
     this.fetchTransactions(this.user.id,this.page,this.size);
   }

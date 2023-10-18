@@ -1,8 +1,8 @@
-.main{
+.main_transactions{
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    background-color: #f6fff6;
+    background-color: #ffffff;
     color: #141414;
     border-radius: 12px;
     padding: 1rem;
@@ -16,17 +16,18 @@
     align-items: center;
     text-align: center;
     gap: 1rem;
-    margin: .5rem 0;
+    padding-top: 1rem;
 }
 
 .paginator{
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
     margin-top: 1rem;
     flex-grow: 1;
+    padding-bottom: 1rem;
 }
 .paginator_info{
     font-size: 1rem;

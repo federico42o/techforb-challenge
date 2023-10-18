@@ -1,12 +1,11 @@
 package com.f42o.api.account;
 
-import com.f42o.api.card.Card;
 import com.f42o.api.user.User;
 import com.f42o.api.utils.Utils;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -14,7 +13,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 public class BankAccount {
 
@@ -89,5 +90,22 @@ public class BankAccount {
         }else{
             throw new RuntimeException("Insuficient Founds");
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        BankAccount other = (BankAccount) obj;
+        return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

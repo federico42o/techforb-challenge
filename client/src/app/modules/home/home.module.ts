@@ -10,6 +10,7 @@ import { CardComponent } from './components/card/card.component';
 import { LastTransactionsComponent } from './components/last-transactions/last-transactions.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { MonthlyBalanceCardComponent } from './components/monthly-balance-card/monthly-balance-card.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
     CardComponent,
     LastTransactionsComponent,
     DashboardComponent,
-    TopBarComponent
+    TopBarComponent,
+    MonthlyBalanceCardComponent
   ],
   imports: [
     CommonModule,

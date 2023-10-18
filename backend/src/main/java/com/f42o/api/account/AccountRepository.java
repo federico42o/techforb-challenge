@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface AccountRepository extends JpaRepository<BankAccount, UUID> {
     Optional<BankAccount> findByCBU(String cbu);
+    Optional<BankAccount> findByClientId(Long id);
 }
