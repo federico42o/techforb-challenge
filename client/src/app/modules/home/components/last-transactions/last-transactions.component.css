@@ -48,3 +48,21 @@
 .disabled{
     opacity: .6;
 }
+img{
+    width: 24px;
+}
+@media (max-width:600px){
+
+    img{
+        width:18px
+    }
+    .main_transactions{
+        max-width: 100%;
+        margin: auto;
+    }
+
+    .transaction_table{
+        font-size: .6rem;
+        font-weight: bold;
+    }
+}

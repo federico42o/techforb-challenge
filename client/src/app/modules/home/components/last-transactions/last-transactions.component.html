@@ -2,7 +2,7 @@
     <h2>Ultimas transacciones</h2>
     <div *ngFor="let transaction of transactions" class="transaction_table">
         <div class="transaction_icon">
-            <img [src]="icon[transaction.transactionType]" [alt]="transaction.transactionType" width="24">
+            <img [src]="icon[transaction.transactionType]" [alt]="transaction.transactionType" >
         </div>
         <div>
             <p>{{transaction.destinationAccount?.fullName}}</p>

@@ -49,3 +49,25 @@
 .helper{
     opacity: .6;
 }
+
+@media (max-width:600px) {
+    .main_card{
+        height: 120px;
+        border-radius: 8px;
+        
+    }
+    
+    .material-symbols-outlined{
+        font-size: 1rem;
+        padding: 0 .8rem;
+    
+    }
+        
+    .card_value{
+        font-size: 1.2rem;
+    }
+    .percent_icon{
+        font-size: 1rem;
+    }
+    
+}

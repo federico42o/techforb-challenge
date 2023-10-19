@@ -42,9 +42,10 @@ nav li:hover{
     .toggle{
         display: block;
     }
-    .toggle div{
+    .small_nav{
         display: flex;
         justify-content: space-between;
+        align-items: flex-end;
     }
     .toggle span{
         padding: 1rem;
@@ -63,6 +64,12 @@ nav li:hover{
     .logo_title{
         color:#7dff71;
         font-size: 2rem;
+    }
+
+    .displayed_nav{
+        height: 100vh;
+        background-color: #1d1d1d;
+        z-index: 9999;
     }
     
 }
