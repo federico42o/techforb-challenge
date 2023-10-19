@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { MenuItem } from 'src/app/models/menu-item';
 import { AuthService } from 'src/app/modules/auth/services';
@@ -13,6 +13,8 @@ export class SidebarComponent implements OnInit {
   
   private menuService = inject(MenuService);
   private authService = inject(AuthService);
+  showMenu=false
+  isSmallScreen = false;
   router = inject(Router);
   menuItems!:MenuItem[];  
     ngOnInit(): void {
@@ -23,9 +25,27 @@ export class SidebarComponent implements OnInit {
           this.menuService.setMenuItems(response);
         }
       });
+      this.checkScreenSize();
     }
     public logout(){
       this.authService.logout();
       this.router.navigate(['/auth/login'])
     }
+
+
+    toggleMenu(){
+      this.showMenu = !this.showMenu
+    }
+    
+
+    checkScreenSize() {
+      this.isSmallScreen = window.innerWidth <= 600;
+      this.showMenu = !this.isSmallScreen
+    }
+  
+    @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+      this.checkScreenSize();
+    }
+
 }

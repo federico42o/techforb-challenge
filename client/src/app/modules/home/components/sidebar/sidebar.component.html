@@ -1,13 +1,26 @@
 <div class="base">
-    <nav class="nav">
-        <li *ngFor="let item of menuItems">
+    <div (click)="toggleMenu()" class="toggle">
+        <div>
+
+            <span class="material-symbols-outlined">
+                menu
+            </span>
+            <span>
+                <h1 class="logo_title">
+                    Unicomer
+                </h1>
+            </span>
+        </div>
+    </div>
+    <nav class="nav" [ngStyle]="{ 'height': showMenu ? '100vh' : '0','display':showMenu ? 'block':'none'}">
+        <li *ngFor="let item of menuItems" class="nav_li" [ngStyle]="{ 'display': showMenu ? 'block' : 'none' }">
             <div class="menu_item" [ngClass]="{'selected':router.url== '/'+item.title}" [routerLink]="'/'+item.title">
                 <span [ngClass]="item.className">{{item.icon}}</span>
                 <span >{{item.title | titlecase}}</span>
             </div>
         </li>
-        <li >
-            <div class="menu_item" (click)="logout()">
+        <li [ngStyle]="{ 'display': showMenu ? 'block' : 'none' }">
+            <div class="menu_item" (click)="logout()" >
                 <span class="material-symbols-outlined">logout</span>
                 Cerrar sesión
             </div>

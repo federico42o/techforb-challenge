@@ -34,3 +34,35 @@ nav li:hover{
 .selected{
     color:#7dff71
 }
+.toggle{
+    display: none;
+}
+
+@media (max-width:600px){
+    .toggle{
+        display: block;
+    }
+    .toggle div{
+        display: flex;
+        justify-content: space-between;
+    }
+    .toggle span{
+        padding: 1rem;
+        font-size: 2rem;
+    }
+
+    .nav{
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1rem;
+        gap: .5rem;
+    }
+    .nav li{
+        padding: 1rem 0;
+    }
+    .logo_title{
+        color:#7dff71;
+        font-size: 2rem;
+    }
+    
+}

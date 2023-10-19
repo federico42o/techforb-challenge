@@ -21,5 +21,23 @@
     margin: 1rem 1rem 1rem 0;
 }
 
-
+@media (max-width:600px){
+  .home_layout {
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: .3fr auto ; 
+    gap: 1rem 1rem; 
+    background-color: #dbdbdb;
+    grid-template-areas: 
+      "sidebar "
+      "main "
+  }
+  .sidebar {
+     grid-area: sidebar; 
+    }
+  .main { 
+    grid-area: main; 
+    margin: 1rem 1rem 1rem 0;
+}
+}
   
