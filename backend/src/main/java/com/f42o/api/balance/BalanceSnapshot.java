@@ -1,7 +1,6 @@
 package com.f42o.api.balance;
 
 import com.f42o.api.account.BankAccount;
-import com.f42o.api.transaction.TransactionType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data

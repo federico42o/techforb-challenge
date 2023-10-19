@@ -1,6 +1,5 @@
 package com.f42o.api.card;
 
-import com.f42o.api.account.BankAccount;
 import com.f42o.api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

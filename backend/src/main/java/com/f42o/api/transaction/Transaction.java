@@ -3,15 +3,15 @@ package com.f42o.api.transaction;
 import com.f42o.api.account.BankAccount;
 import com.f42o.api.user.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
-import org.hibernate.proxy.HibernateProxy;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Getter

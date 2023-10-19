@@ -4,13 +4,10 @@ import com.f42o.api.account.BankAccount;
 import com.f42o.api.utils.Utils;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.UUID;
 
 @Entity
 @Data

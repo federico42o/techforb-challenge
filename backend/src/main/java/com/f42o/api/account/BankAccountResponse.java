@@ -1,6 +1,5 @@
 package com.f42o.api.account;
 
-import com.f42o.api.user.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

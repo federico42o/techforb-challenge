@@ -1,7 +1,5 @@
 package com.f42o.api.user;
 
-import java.util.List;
-
 public interface UserService {
 
     UserResponse getById(Long id);

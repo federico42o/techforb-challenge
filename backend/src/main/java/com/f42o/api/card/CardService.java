@@ -1,7 +1,5 @@
 package com.f42o.api.card;
 
-import com.f42o.api.account.BankAccount;
-
 import java.util.List;
 
 public interface CardService {
