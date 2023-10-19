@@ -15,7 +15,7 @@
     <nav class="nav" [ngClass]="{'displayed_nav':showMenu}" [ngStyle]="{ 'display':showMenu ? 'block':'none'}">
         <li *ngFor="let item of menuItems" class="nav_li" [ngStyle]="{ 'display': showMenu ? 'block' : 'none' }" (click)="toggleMenu()">
             <div class="menu_item" [ngClass]="{'selected':router.url== '/'+item.title}" [routerLink]="'/'+item.title">
-                <span [ngClass]="item.className">{{item.icon}}</span>
+                <span class="material-symbols-outlined">{{item.icon}}</span>
                 <span >{{item.title | titlecase}}</span>
             </div>
         </li>
