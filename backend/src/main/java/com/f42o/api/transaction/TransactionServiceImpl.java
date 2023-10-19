@@ -9,6 +9,7 @@ import com.f42o.api.balance.BalanceSnapshotRepository;
 import com.f42o.api.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,14 +129,65 @@ public class TransactionServiceImpl implements TransactionService{
         return new PageImpl<>(response,pageable,transactions.getTotalElements());
     }
 
+    @Override
+    public MonthlyTransactionDTO getAllIncomes(Long id) {
+        userRepository.findById(id).orElseThrow(
+                ()->new RuntimeException("User doesn't exist with id "+id)
+        );
+        BankAccount bankAccount = accountRepository.findByClientId(id).orElseThrow(
+                ()->new RuntimeException("The user doesn't have an active account.")
+        );
 
+        List<Transaction> incomes = transactionRepository.findAllIncomes(id,bankAccount.getId(),LocalDate.now());
+        List<Transaction> incomesPastMonth = transactionRepository.findAllIncomes(id,bankAccount.getId(),LocalDate.now().minusMonths(1));
 
+        return buildDto(incomes,incomesPastMonth,SummaryType.INCOMES);
+    }
+
+    @Override
+    public MonthlyTransactionDTO getAllExpenses(Long id) {
+        userRepository.findById(id).orElseThrow(
+                ()->new RuntimeException("User doesn't exist with id "+id)
+        );
+        BankAccount bankAccount = accountRepository.findByClientId(id).orElseThrow(
+                ()->new RuntimeException("The user doesn't have an active account.")
+        );
+
+        List<Transaction> incomes = transactionRepository.findAllExpenses(id,bankAccount.getId(),LocalDate.now());
+        List<Transaction> incomesPastMonth = transactionRepository.findAllExpenses(id,bankAccount.getId(),LocalDate.now().minusMonths(1));
+
+        return buildDto(incomes,incomesPastMonth,SummaryType.EXPENSES);
+    }
 
 
     private BankAccountDTO buildDto(BankAccount entity){
         return BankAccountDTO.builder()
                 .fullName(entity.getClient().getFullName())
                 .cbu(entity.getCBU())
+                .build();
+    }
+
+    private MonthlyTransactionDTO buildDto(List<Transaction> thisMonth, List<Transaction> pastMonth,SummaryType type){
+        BigDecimal actualValue=BigDecimal.ZERO;
+        double pastValue=0;
+        double differencePercentage;
+        for (Transaction transaction : thisMonth) {
+            actualValue = actualValue.add(transaction.getAmount());
+        }
+        for (Transaction transaction : pastMonth) {
+            pastValue += transaction.getAmount().doubleValue();
+        }
+        if (pastValue != 0) {
+            differencePercentage = ((actualValue.doubleValue() - pastValue) / pastValue) * 100;
+        } else{
+            differencePercentage = 0;
+
+        }
+
+        return MonthlyTransactionDTO.builder()
+                .total(actualValue)
+                .differenceBetweenPastMonth(differencePercentage)
+                .type(type)
                 .build();
     }
 }

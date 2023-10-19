@@ -2,8 +2,11 @@
 <section class="cards">
     <!-- TODO articles -->
     <app-card [user]="user" [bankAccount]="bankAccount"></app-card>
-    <app-monthly-balance-card title="ingresos"/>
-    <app-monthly-balance-card title="egresos"/>
+    <div class="month_summary">
+        <app-monthly-balance-card title="INCOMES"/>
+        <app-monthly-balance-card title="EXPENSES"/>
+
+    </div>
 
 </section>
 <section class="mid_section">
@@ -16,7 +19,8 @@
         <app-last-transactions [user]="user"/>
     </div>
 </section>
-<section class="table">
+<!-- TODO -->
+<!-- <section class="table">
     <app-transactions-table></app-transactions-table>
-</section>
+</section> -->
 </div>

@@ -35,7 +35,7 @@ public class Card {
     }
 
     public Card(String cardHolderName,BankAccount bankAccount) {
-        this.cardHolderName = cardHolderName;
+        this.cardHolderName =  shortName(cardHolderName);
         this.cardNumber = generateCardNumber();
         this.CVV = generateCVV();
         this.expirationDate = LocalDate.now().plus(Period.ofYears(5));
@@ -61,6 +61,18 @@ public class Card {
             sb.append(Utils.randomNumber());
         }
         return sb.toString();
+    }
+
+    private String shortName(String cardHolderName){
+        String[] names = cardHolderName.split(" ");
+        String newName = "";
+        for(String name:names){
+            newName += name +" ";
+            if(newName.length()+name.length()>16){
+                break;
+            }
+        }
+        return newName.trim();
     }
 
 

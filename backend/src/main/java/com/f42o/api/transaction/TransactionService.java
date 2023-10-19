@@ -13,5 +13,9 @@ public interface TransactionService {
     void transfer(TransferDTO dto);
     Page<TransactionDTO> getAllByClientId(Pageable pageable,Long clientId);
 
+    MonthlyTransactionDTO getAllIncomes(Long id);
+    MonthlyTransactionDTO getAllExpenses(Long id);
+
+
 
 }

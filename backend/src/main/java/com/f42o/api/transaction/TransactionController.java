@@ -42,6 +42,14 @@ public class TransactionController {
 
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/incomes/{id}")
+    public ResponseEntity<MonthlyTransactionDTO> incomes(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllIncomes(id));
+    }
 
+    @GetMapping("/expenses/{id}")
+    public ResponseEntity<MonthlyTransactionDTO> expenses(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllExpenses(id));
+    }
 
 }

@@ -8,4 +8,5 @@ public interface UserService {
     void update(User user);
     void delete(Long id);
     UserResponse getByCredential(String credential);
+    Boolean checkByCredential(String credential);
 }

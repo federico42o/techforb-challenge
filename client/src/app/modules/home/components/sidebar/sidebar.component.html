@@ -1,9 +1,9 @@
 <div class="base">
     <nav class="nav">
         <li *ngFor="let item of menuItems">
-            <div class="menu_item" [routerLink]="'/'+item.title">
+            <div class="menu_item" [ngClass]="{'selected':router.url== '/'+item.title}" [routerLink]="'/'+item.title">
                 <span [ngClass]="item.className">{{item.icon}}</span>
-                {{item.title | titlecase}}
+                <span >{{item.title | titlecase}}</span>
             </div>
         </li>
         <li >

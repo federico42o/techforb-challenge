@@ -14,4 +14,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Page<Transaction> findAllByClientId(Pageable pageable,Long id);
 
+    @Query("SELECT t FROM Transaction t WHERE t.client.id = ?1 AND (t.transactionType IN ('DEPOSIT','TRANSFER')) AND t.destinationAccount.id=?2 AND t.amount > 0 AND MONTH(t.timestamp) = MONTH(?3) AND YEAR(t.timestamp) = YEAR(?3)")
+    List<Transaction> findAllIncomes(Long id, Long bankAccountId, LocalDate date);
+
+    @Query("SELECT t FROM Transaction t WHERE t.client.id = ?1 AND (t.transactionType IN ('WITHDRAW','TRANSFER','PAYMENT')) AND t.sourceAccount.id=?2 AND t.amount > 0 AND MONTH(t.timestamp) = MONTH(?3) AND YEAR(t.timestamp) = YEAR(?3)")
+    List<Transaction> findAllExpenses(Long id, Long bankAccountId, LocalDate date);
+
 }

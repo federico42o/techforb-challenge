@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, Observable, catchError, switchMap, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, OperatorFunction, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
 import { User } from 'src/app/models/user';
-import { UserRequest } from 'src/app/models/user-request';
+import { LoginRequest } from 'src/app/models/login-request';
 import { environment } from 'src/environments/environment';
+import { RegisterRequest } from 'src/app/models/register-request';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,6 @@ export class AuthService {
   private cookie = inject(CookieService);
   private http = inject(HttpClient);
   private currentUserSubject = new BehaviorSubject<User|null>(null);
-  private userLogged = new BehaviorSubject<Boolean>(false);
   constructor(){this.initializeCurrentUser()}
 
   private initializeCurrentUser(): void {
@@ -29,7 +29,7 @@ export class AuthService {
           this.setCurrentUser(user);
 
         },
-        error: (err: any) => {
+        error: () => {
 
           this.cookie.deleteAll();
         }
@@ -39,7 +39,7 @@ export class AuthService {
 
 
 
-  login(request:UserRequest):Observable<any>{
+  login(request:LoginRequest):Observable<any>{
     return this.http.post(`${this.authUrl}/login`,request).pipe(
       switchMap((res: any) => {
         this.cookie.set('token', res.token,{expires:1,path:'/'});
@@ -48,7 +48,6 @@ export class AuthService {
       }),
       tap((user: User) => {
         this.setCurrentUser(user);
-        this.setUserLogged(true)
         
       }),
       catchError(() => {
@@ -58,6 +57,10 @@ export class AuthService {
       })
       
     );
+  }
+
+  register(request:RegisterRequest):Observable<any>{
+    return this.http.post(`${this.authUrl}/register`,request);
   }
 
   logout(){
@@ -72,20 +75,20 @@ export class AuthService {
   setCurrentUser(user:User | null){
     this.currentUserSubject.next(user);
   }
-  setUserLogged(state:boolean){
-    this.userLogged.next(state);
-  }
+
 
   getCurrentUser(){
     return this.currentUserSubject.asObservable();
   }
-  getUserLogged(){
-    return this.userLogged.asObservable();
-  }
 
-  isLoggedIn(): boolean {
+
+  isLoggedIn() {
     const token = this.cookie.get('token');
     return token !== '' && token !== null;
+  }
+
+  userAlreadyExist(credentialNumber:string){
+    return this.http.get(`${this.apiUrl}/users/check/${credentialNumber}`);
   }
 
   private decodeToken(token:string):string{

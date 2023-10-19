@@ -4,12 +4,8 @@
         <app-sidebar/>
     </aside>
     
-    <div *ngIf="user" class="topbar">
-        
-        Bienvenido {{user.fullName}}
-        <button (click)="logout()">
-            Cerrar sesión
-        </button>
+    <div class="topbar">
+        <app-top-bar/>
     </div>
     <main class="main">
         <router-outlet/>

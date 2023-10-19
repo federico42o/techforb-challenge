@@ -8,25 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent{
   
-  user!:User;
-  private authService = inject(AuthService);
-  
-  ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe({
-      next:(user:User | null)=>{
 
-        if(user){
-          this.user = user;
-        }
-      }
-    })
-
-  }
-
-
-  public logout(){
-    this.authService.logout();
-  }
 }

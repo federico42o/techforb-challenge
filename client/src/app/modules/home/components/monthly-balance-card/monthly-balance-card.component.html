@@ -1,11 +1,19 @@
-    <div class="main_card">
-        <div class="card_header">
+    <div class="main_card" *ngIf="monthlySummary" >
             <div class="card_icon">
-                <img [src]="setIcon(title)" alt="" width="32">
+                <img [src]="setIcon(monthlySummary.type)" alt="" width="64">
             </div>
-            <div>
-                <p>{{title}}</p>
-                
+            <div class="card_value">
+                <p class="helper">{{monthlySummary.type | titlecase}}</p>
+                <span>{{monthlySummary.total | currency}}</span>
+            </div>
+            <div class="card_percent">
+                <p class="helper">Last month</p>
+                <div class="percent_icon">
+                    <!-- <span class="material-symbols-outlined">
+                        {{setArrow(monthlySummary.total)}}
+                    </span> -->
+                    <span>{{monthlySummary.differenceBetweenPastMonth>0 ? '+':'-'}}{{ monthlySummary.differenceBetweenPastMonth/100| percent:'1.0-0'}}</span>
+
+                </div>
             </div>
         </div>
-    </div>

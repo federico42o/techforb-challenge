@@ -53,4 +53,9 @@ public class UserServiceImpl implements UserService{
                 .credentialNumber(user.getCredentialNumber())
                 .build();
     }
+
+    @Override
+    public Boolean checkByCredential(String credential) {
+        return userRepository.findByCredentialNumber(credential).isPresent();
+    }
 }

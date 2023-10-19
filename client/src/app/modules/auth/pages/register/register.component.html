@@ -1,0 +1,97 @@
+<div class="register_wrapper">
+    
+    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div *ngIf="form.get('credentialNumber')?.hasError('userAlreadyExists')" class="cross-validation-error-message alert">
+            Usuario ya existe
+        </div>
+        <div>
+
+        
+        <div class="input_box" [class.invalid]="touched('credentialType')">
+            <label for="type" [ngClass]="{'float_label_in':isTypeFocused}">Tipo de documento</label>
+            <select id="type" formControlName="credentialType" type="text" class="input"
+            (focus)="isTypeFocused = true">
+            <option selected disabled="true">
+                Seleccione uno
+            </option>
+            <option class="" value="DNI">
+                DNI
+            </option>
+            <option class="" value="LE">
+                LE
+            </option>
+            <option class="" value="LC">
+                LC
+            </option>
+        </select>
+    </div>
+    <div class="input_box error_box">
+        
+        <div *ngIf="touched('credentialType')">
+            <span class="span_error" *ngIf="credentialType?.hasError('required')">Este campo es requerido.</span>
+        </div>
+    </div>
+</div>
+<div>
+
+    <div class="input_box" [class.invalid]="touched('credentialNumber')">
+        <label for="dni" [ngClass]="{'float_label_in':isDniFocused}">Número de documento</label>
+        <input id="dni" formControlName="credentialNumber" type="text" class="input"
+        (focus)="isDniFocused = true">
+    </div>
+    <div class="input_box error_box">
+
+        <div *ngIf="touched('credentialNumber')" >
+            <span class="span_error" *ngIf="credentialNumber?.hasError('required')">Este campo es requerido.</span>
+            <span class="span_error" *ngIf="credentialNumber?.hasError('minlength')">El número es muy corto.</span>
+            <span class="span_error" *ngIf="credentialNumber?.hasError('maxlength')">El número es muy largo.</span>
+        </div>
+    </div>
+    </div>
+    <div>
+    <div class="input_box" [class.invalid]="touched('fullName')">
+        <label for="name" [ngClass]="{'float_label_in':isNameFocused}" >Nombres y Apellidos</label>
+        <input id="name" formControlName="fullName" type="text" class="input"
+        
+        (focus)="isNameFocused = true">
+    </div>
+    <div class="input_box error_box">
+
+        <div *ngIf="touched('fullName')">
+            <span class="span_error" *ngIf="fullName?.hasError('required')">Este campo es requerido.</span>
+            <span class="span_error" *ngIf="fullName?.hasError('minlength')">El nombre es muy corto.</span>
+            <span class="span_error" *ngIf="fullName?.hasError('maxlength')">El nombre es muy largo.</span>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="input_box" [class.invalid]="touched('password')">
+        <label for="password" [class.float_label_in]="isPasswordFocused">Clave</label>
+        <div class="password_box" (mouseenter)="showIcon=true" (mouseleave)="showIcon=false">
+
+            <input id="password" formControlName="password" [type]="showPassword ? 'text':'password'" class="input"
+            (focus)="isPasswordFocused = true">
+            <span class="material-symbols-outlined" (click)="showPassword = !showPassword" [ngClass]="{'hide':!showIcon}">
+                visibility
+            </span>
+        </div>
+    </div>
+    <div class="input_box error_box">
+
+        <div *ngIf="touched('password')">
+            <span class="span_error" *ngIf="password?.hasError('required')">Este campo es requerido.</span>
+            <span class="span_error" *ngIf="password?.hasError('minlength')">La contraseña es muy corta.</span>
+            <span class="span_error" *ngIf="password?.hasError('maxlength')">La contraseña es muy larga.</span>
+        </div>
+    </div>
+</div>
+    <button class="button" type="submit">
+        Registrarme
+    </button>
+</form>
+
+
+<div class="have_account">
+    ¿Ya tienes una cuenta? Iniciá sesión <a routerLink="/auth/login" >aqui</a>
+</div>
+</div>

@@ -1,0 +1,15 @@
+.main_topbar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+span{
+    font-size: 1.5rem;
+}
+.material-symbols-outlined{
+    font-size: 2rem;
+}

@@ -1,6 +1,11 @@
+.chart_container{
+    width: 600px;
+
+}
+
 .chart_main{
-    background-color: #ffffff;
-    color: #141414;
+    background-color: #1d1d1d;
+    color: #fff;
     border-radius: 12px;
     padding: 1rem;
 }
@@ -9,4 +14,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+select{
+    border: 0;
+    outline: 0;
+    padding: .5rem;
+    border-radius: 6px;
 }

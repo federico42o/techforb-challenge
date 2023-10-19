@@ -18,15 +18,15 @@
             <p [style.color]="statusColor[transaction.status]">{{transaction.status}}</p>
         </div>
     </div>
-    
+
     <div class="paginator">
         <div class="paginator_info">
             <p>Mostrando {{size}} de {{totalElements}}</p>
         </div>
         <div class="paginator_buttons">
-        <button (click)="prevPage()">prev</button>
-        <div class="current_page">{{page+1}}</div>
-        <button (click)="nextPage()">next</button>
+            <button (click)="prevPage()" [disabled]="page===0" [class.disabled]="page===0">prev</button>
+            <span class="current_page">{{page+1}}</span>
+            <button (click)="nextPage()" [disabled]="page===totalPages-1" [class.disabled]="page===totalPages-1">next</button>
         </div>
     </div>
 </div>

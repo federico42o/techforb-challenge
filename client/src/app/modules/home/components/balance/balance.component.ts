@@ -51,6 +51,7 @@ export class BalanceComponent implements OnInit{
           borderWidth: 1,
           maxBarThickness: 30,
           backgroundColor:"#76C1A1",
+        
           
           
         },
@@ -58,6 +59,8 @@ export class BalanceComponent implements OnInit{
       ]
       },
       options: {
+        color:"#fff",
+        maintainAspectRatio:false,
         plugins:{
           tooltip:{
             padding:26,
@@ -81,19 +84,25 @@ export class BalanceComponent implements OnInit{
         },
         scales: {
           y: {
+            
             beginAtZero: true,
             grid:{
-              lineWidth:3,
+              color:"#767676",
             },
             ticks:{
               callback: function(value, index, values) {
                 return value.toLocaleString("en-US",{style:"currency", currency:"USD"});
-              }
+              },
+              color:"#fff",
             }
           },
           x:{
             grid:{
-              display:true
+              display:false,
+              color:"#767676",
+            },
+            ticks:{
+              color:"#fff",
             }
           }
 

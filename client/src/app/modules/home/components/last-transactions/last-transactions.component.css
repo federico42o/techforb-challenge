@@ -38,8 +38,13 @@
     align-items: center;
 }
 .paginator_buttons button{
+    cursor: pointer;
     background-color: transparent;
     color: #1d1d1d;
     border: none;
     padding: .5rem;
+}
+
+.disabled{
+    opacity: .6;
 }

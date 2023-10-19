@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { MenuItem } from 'src/app/models/menu-item';
 import { AuthService } from 'src/app/modules/auth/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,6 +13,7 @@ export class SidebarComponent implements OnInit {
   
   private menuService = inject(MenuService);
   private authService = inject(AuthService);
+  router = inject(Router);
   menuItems!:MenuItem[];  
     ngOnInit(): void {
 
@@ -24,5 +26,6 @@ export class SidebarComponent implements OnInit {
     }
     public logout(){
       this.authService.logout();
+      this.router.navigate(['/auth/login'])
     }
 }

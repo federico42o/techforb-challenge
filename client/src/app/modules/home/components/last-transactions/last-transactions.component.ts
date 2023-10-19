@@ -62,7 +62,7 @@ export class LastTransactionsComponent implements OnInit,OnChanges {
     this.page = this.page > 0? --this.page: this.page = 0;
     this.pagination(this.page);
   }
-
+  
   nextPage(){
     this.page = this.page < this.totalPages-1 ? ++this.page : this.totalPages-1
     this.pagination(this.page);

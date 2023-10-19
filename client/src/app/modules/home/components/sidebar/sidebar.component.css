@@ -30,3 +30,7 @@ nav li:hover{
     gap: 1rem;
     align-items: center;
 }
+
+.selected{
+    color:#7dff71
+}

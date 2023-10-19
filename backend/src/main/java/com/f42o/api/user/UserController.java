@@ -16,13 +16,12 @@ public class UserController {
     private final UserService userService;
 
 
-    @GetMapping
-    public String asd(){
-        return "asd";
-    }
-
     @GetMapping("/{credentialNumber}")
     public ResponseEntity<UserResponse> getByCredentialNumber(@PathVariable String credentialNumber){
         return ResponseEntity.status(200).body(userService.getByCredential(credentialNumber));
+    }
+    @GetMapping("/check/{credentialNumber}")
+    public ResponseEntity<Boolean> checkByCredentialNumber(@PathVariable String credentialNumber){
+        return ResponseEntity.status(200).body(userService.checkByCredential(credentialNumber));
     }
 }

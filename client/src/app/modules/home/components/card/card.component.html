@@ -1,29 +1,57 @@
-<div class="main" *ngIf="favCard">
-    <div class="card_header">
-        <p class="helper">Mi saldo</p>
-        <p class="data" *ngIf="bankAccount">{{bankAccount.balance| currency}}</p>
+<section class="main">
+    <div class="title">
+        
+        <p>Información de la cuenta</p>
     </div>
 
-
-        <div class="card_number">
+    <div class="info" *ngIf="favCard && bankAccount">
+        <div class="card" >
+            <div class="card_header">
+                <p class="helper">Mi saldo</p>
+                <p class="data" *ngIf="bankAccount">{{bankAccount.balance| currency}}</p>
+            </div>
             
-            <p>{{formatCardNumber(favCard.cardNumber)}}</p>
+            
+            <div class="card_number">
+                
+                <p>{{formatCardNumber(favCard.cardNumber)}}</p>
+            </div>
+            <div class="card_footer">
+                <div class="card_name">
+                    <p class="helper">Titular</p>
+                    <p class="data">{{favCard.cardHolderName}}</p>
+                </div>
+                <div class="card_date">
+                    <p class="helper">Válido hasta</p>
+                    
+                    <p class="data">{{favCard.expirationDate | date:'MM/YY'}}</p>
+                </div>
+                <div class="card_cvv">
+                    <p class="helper">CVV</p>
+                    
+                    <p class="data">{{favCard.cvv}}</p>
+                </div>
+            </div>
+
+    </div>
+    <div class="card">
+        <div class="card_header">
+            <p class="helper">Mi CBU</p>
+            <p class="data" *ngIf="bankAccount">{{bankAccount.cbu}}</p>
+        </div>
+        
+        
+        <div class="card_alias"> 
+            <p class="helper">Mi Alias</p>
+            <p class="data">{{bankAccount.alias}}</p>
         </div>
         <div class="card_footer">
             <div class="card_name">
                 <p class="helper">Titular</p>
                 <p class="data">{{favCard.cardHolderName}}</p>
             </div>
-            <div class="card_date">
-                <p class="helper">Válido hasta</p>
-
-                <p class="data">{{favCard.expirationDate | date:'MM/YY'}}</p>
-            </div>
-            <div class="card_cvv">
-                <p class="helper">CVV</p>
-
-                <p class="data">{{favCard.cvv}}</p>
-            </div>
         </div>
-
+        
+    </div>
 </div>
+</section>

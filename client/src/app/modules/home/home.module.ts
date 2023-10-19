@@ -11,6 +11,8 @@ import { LastTransactionsComponent } from './components/last-transactions/last-t
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { MonthlyBalanceCardComponent } from './components/monthly-balance-card/monthly-balance-card.component';
+import { CardsComponent } from './pages/cards/cards.component';
+import { OperationsComponent } from './pages/operations/operations.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { MonthlyBalanceCardComponent } from './components/monthly-balance-card/m
     LastTransactionsComponent,
     DashboardComponent,
     TopBarComponent,
-    MonthlyBalanceCardComponent
+    MonthlyBalanceCardComponent,
+    CardsComponent,
+    OperationsComponent
   ],
   imports: [
     CommonModule,
