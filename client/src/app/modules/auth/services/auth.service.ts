@@ -87,9 +87,7 @@ export class AuthService {
     if(token !== '' && token !== null){
       const tokenExpiration = new Date(this.decodeToken(token).exp*1000)
       const currentDate = new Date();
-      console.log(currentDate>tokenExpiration)
-      console.log(tokenExpiration)
-      console.log(currentDate)
+
       return currentDate<tokenExpiration;
     }
     return false;
