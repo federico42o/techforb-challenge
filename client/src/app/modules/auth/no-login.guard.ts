@@ -17,7 +17,7 @@ export class NoLoginGuard {
     if (!this.authService.isLoggedIn()){
       return true;
     }
-    this.router.navigate(['']);
+    this.router.navigate(['/inicio']);
     return false;
   }
   
