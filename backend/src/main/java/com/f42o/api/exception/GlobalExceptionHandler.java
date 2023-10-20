@@ -14,7 +14,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String,ErrorResponse>> validException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<Map<String,ErrorResponse>> handleValid(MethodArgumentNotValidException ex) {
         Map<String, ErrorResponse> response = new HashMap<>();
         ex.getBindingResult()
                 .getFieldErrors()
@@ -26,6 +26,14 @@ public class GlobalExceptionHandler {
                                 .build()))
         ;
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    @ExceptionHandler({UserNotFoundException.class,BankAccountNotFoundException.class})
+    public ResponseEntity<ErrorResponse> handleNotFound(Exception ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.builder().message(ex.getMessage()).status(HttpStatus.NOT_FOUND.toString()).timestamp(LocalDateTime.now()).build());
+    }
+    @ExceptionHandler({InvalidAmountException.class,InsufficientFundsException.class})
+    public ResponseEntity<ErrorResponse> handleBadRequest(Exception ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder().message(ex.getMessage()).status(HttpStatus.BAD_REQUEST.toString()).timestamp(LocalDateTime.now()).build());
     }
 
     @ExceptionHandler(RuntimeException.class)

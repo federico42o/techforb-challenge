@@ -6,9 +6,7 @@ import { AuthService } from "../services";
 @Injectable({ providedIn: 'root' })
 export class UniqueUserValidator{
   static createValidator(authService: AuthService): AsyncValidatorFn {
-    console.log('Starting async validation...')
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      console.log('Starting async validation...')
       return authService.userAlreadyExist(control.value)
         .pipe(
           map((result) =>

@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './modules/auth/auth.interceptor';
+import { LoaderInterceptor } from './shared/services/loader.interceptor';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AuthInterceptor } from './modules/auth/auth.interceptor';
     BrowserAnimationsModule
   ],
   providers: [CookieService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide:HTTP_INTERCEPTORS,useClass:LoaderInterceptor,multi:true}
   ],
   bootstrap: [AppComponent]
 })

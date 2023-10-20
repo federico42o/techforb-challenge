@@ -157,7 +157,6 @@ export class BalanceComponent implements OnInit{
       start.setUTCMonth(0, 1); 
       start.setUTCHours(0, 0, 0, 0); 
     }
-    console.log(start)
     return start;
   }
 }

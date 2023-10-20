@@ -1,5 +1,7 @@
 package com.f42o.api.account;
 
+import com.f42o.api.exception.InsufficientFundsException;
+import com.f42o.api.exception.InvalidAmountException;
 import com.f42o.api.user.User;
 import com.f42o.api.utils.Utils;
 import jakarta.persistence.*;
@@ -81,7 +83,7 @@ public class BankAccount {
         if (amount.compareTo(BigDecimal.ZERO) > 0) {
             this.balance = balance.add(Objects.requireNonNull(amount));
         }else{
-            throw new RuntimeException("Invalid amount");
+            throw new InvalidAmountException();
         }
     }
 
@@ -89,7 +91,7 @@ public class BankAccount {
         if (amount.compareTo(BigDecimal.ZERO) > 0 && amount.compareTo(this.balance) <= 0) {
             this.balance = balance.subtract(Objects.requireNonNull(amount));
         }else{
-            throw new RuntimeException("Insuficient Founds");
+            throw new InsufficientFundsException();
         }
     }
 

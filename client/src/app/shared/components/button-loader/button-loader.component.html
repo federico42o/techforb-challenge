@@ -1,0 +1,4 @@
+<button class="button" type="submit">
+    <span *ngIf="!(isLoading | async)">{{label}}</span>
+    <span *ngIf="isLoading | async" class="loader"></span>
+</button>

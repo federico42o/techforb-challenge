@@ -1,5 +1,6 @@
 package com.f42o.api.user;
 
+import com.f42o.api.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserResponse getById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
-                ()->new RuntimeException("User doesn't exist.")
+                ()->new UserNotFoundException("User doesn't exist with id " + id)
         );
         return UserResponse.builder()
                 .id(user.getId())
@@ -26,8 +27,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void update(User user) {
+        //TODO
         User updateUser = userRepository.findById(user.getId()).orElseThrow(
-                ()->new RuntimeException("User doesn't exist.")
+                ()->new UserNotFoundException("User doesn't exist.")
         );
 
 
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow(
-                ()->new RuntimeException("User doesn't exist.")
+                ()->new UserNotFoundException("User doesn't exist with id " + id)
         );
         user.setEnabled(false);
         userRepository.save(user);
@@ -45,7 +47,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserResponse getByCredential(String credential) {
         User user = userRepository.findByCredentialNumber(credential).orElseThrow(
-                ()-> new RuntimeException("User doesn't exist."));
+                ()-> new UserNotFoundException("User doesn't exist with credential "+ credential));
         return UserResponse.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())

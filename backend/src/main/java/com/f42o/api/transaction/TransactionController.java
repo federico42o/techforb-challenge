@@ -1,5 +1,6 @@
 package com.f42o.api.transaction;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +22,13 @@ public class TransactionController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<HttpStatus> withdraw(@RequestBody WithdrawDTO dto){
+    public ResponseEntity<HttpStatus> withdraw(@Valid @RequestBody WithdrawDTO dto){
         service.withdraw(dto);
 
         return ResponseEntity.noContent().build();
     }
     @PostMapping("/transfer")
-    public ResponseEntity<HttpStatus> withdraw(@RequestBody TransferDTO dto){
+    public ResponseEntity<HttpStatus> withdraw(@Valid @RequestBody TransferDTO dto){
         service.transfer(dto);
 
         return ResponseEntity.noContent().build();
@@ -36,7 +37,7 @@ public class TransactionController {
 
 
     @PostMapping("/deposit")
-    public ResponseEntity<HttpStatus> withdraw(@RequestBody DepositDTO dto){
+    public ResponseEntity<HttpStatus> withdraw(@Valid @RequestBody DepositDTO dto){
         service.deposit(dto);
 
         return ResponseEntity.noContent().build();

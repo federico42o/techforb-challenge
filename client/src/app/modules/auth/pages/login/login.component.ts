@@ -70,6 +70,7 @@ export class LoginComponent implements OnInit {
       return
     }
     const request:LoginRequest = this.form.value;
+
     this.authService.login(request).subscribe({
       next:()=>{
         this.router.navigate(["/inicio"])

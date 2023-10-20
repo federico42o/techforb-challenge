@@ -24,7 +24,7 @@ export class AuthService {
       const token = this.cookie.get('token');
       const decoded: any = this.decodeToken(token);
 
-      this.getUserByCredential(decoded).subscribe({
+      this.getUserByCredential(decoded.sub).subscribe({
         next: (user: User) => {
           this.setCurrentUser(user);
 
@@ -44,13 +44,13 @@ export class AuthService {
       switchMap((res: any) => {
         this.cookie.set('token', res.token,{expires:1,path:'/'});
         const decoded: any = this.decodeToken(res.token);
-        return this.getUserByCredential(decoded);
+        return this.getUserByCredential(decoded.sub);
       }),
       tap((user: User) => {
         this.setCurrentUser(user);
         
       }),
-      catchError(() => {
+      catchError((err:any) => {
         this.cookie.delete('token', '/');
         this.setCurrentUser(null);
         return throwError(()=> new Error('Usuario o contraseña incorrectos.'));
@@ -91,10 +91,13 @@ export class AuthService {
     return this.http.get(`${this.apiUrl}/users/check/${credentialNumber}`);
   }
 
-  private decodeToken(token:string):string{
+  decodeToken(token:any):any{
+    const decodedPayload = {sub:"",exp:""}
     const payload = token.split('.')[1];
     const base64 = payload.replaceAll('-', '+').replaceAll('_', '/');
-    const decodedPayload = JSON.parse(atob(base64));
-    return decodedPayload.sub;
+    decodedPayload.sub = JSON.parse(atob(base64)).sub;
+    decodedPayload.exp = JSON.parse(atob(base64)).exp;
+    return decodedPayload;
   }
+  
 }

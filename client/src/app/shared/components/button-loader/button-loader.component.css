@@ -1,0 +1,27 @@
+.button{
+    width: 100%;
+    border-radius: 12px;
+    padding: 4px;
+    border: 0;
+    margin: auto;
+    font-size: 1.4rem;
+}
+
+
+.loader {
+    animation: l5 1s infinite linear alternate;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+    margin:10px auto;
+    position: relative;
+    color: #272727;
+    box-sizing: border-box;
+  }
+  @keyframes l5 {
+      0%  {box-shadow: 20px 0 #272727, -20px 0 #27272721;background: #272727 }
+      33% {box-shadow: 20px 0 #272727, -20px 0 #27272721;background: #27272721}
+      66% {box-shadow: 20px 0 #27272721,-20px 0 #272727; background: #27272721}
+      100%{box-shadow: 20px 0 #27272721,-20px 0 #272727; background: #272727 }
+  }

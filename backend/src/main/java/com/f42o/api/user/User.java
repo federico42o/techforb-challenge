@@ -35,6 +35,7 @@ public class User implements UserDetails {
     private CredentialType credentialType;
     @NotNull
     @Size(max = 8,min = 7)
+    @Column(unique = true)
     private String credentialNumber;
 
     @Size(min = 6)

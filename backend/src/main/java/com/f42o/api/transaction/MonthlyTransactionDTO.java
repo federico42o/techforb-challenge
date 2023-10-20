@@ -16,5 +16,5 @@ public class MonthlyTransactionDTO {
 
     private SummaryType type;
     private BigDecimal total;
-    private Double differenceBetweenPastMonth;
+    private BigDecimal differenceBetweenPastMonth;
 }
