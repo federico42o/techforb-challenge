@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BalanceComponent } from './balance.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('BalanceComponent', () => {
   let component: BalanceComponent;
@@ -8,7 +10,9 @@ describe('BalanceComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BalanceComponent]
+      declarations: [BalanceComponent],
+      imports: [HttpClientModule, HttpClientTestingModule],
+
     });
     fixture = TestBed.createComponent(BalanceComponent);
     component = fixture.componentInstance;

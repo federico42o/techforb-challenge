@@ -13,16 +13,23 @@ export class SidebarComponent implements OnInit {
   
   private menuService = inject(MenuService);
   private authService = inject(AuthService);
+
   showMenu=false
   isSmallScreen = false;
   router = inject(Router);
-  menuItems!:MenuItem[];  
+  menuItems!:MenuItem[];
+  menuItemsMap: { [key: string]: MenuItem } = {}  
     ngOnInit(): void {
 
       this.menuService.getAll().subscribe({
         next:(response:MenuItem[])=>{
-          this.menuItems = response;
-          this.menuService.setMenuItems(response);
+          response.forEach(
+            item=>{
+              this.menuItemsMap[item.title.toUpperCase()] = item; 
+            }
+          );
+
+          this.menuItems = [this.menuItemsMap["INICIO"],this.menuItemsMap["TARJETAS"],this.menuItemsMap["OPERACIONES"],this.menuItemsMap["AYUDA"]]
         }
       });
       this.checkScreenSize();

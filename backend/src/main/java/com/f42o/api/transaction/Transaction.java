@@ -54,7 +54,7 @@ public class Transaction {
     private TransactionStrategy getTransactionStrategy() {
         return switch (transactionType) {
             case WITHDRAW -> new WithdrawTransactionStrategy();
-            case TRANSFER, PAYMENT -> new TransferTransactionStrategy();
+            case TRANSFER-> new TransferTransactionStrategy();
             case DEPOSIT -> new DepositTransactionStrategy();
             default -> throw new UnsupportedOperationException("Transaction type not supported");
         };

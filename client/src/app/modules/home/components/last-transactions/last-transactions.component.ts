@@ -12,7 +12,7 @@ import { HttpResponseBase } from '@angular/common/http';
 })
 export class LastTransactionsComponent implements OnInit,OnChanges {
 
-  @Input() user!:User;
+  @Input() user:User = {} as User;
   private transactionService = inject(TransactionsService)
   transactions!:Transaction[];
   

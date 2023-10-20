@@ -1,114 +1,112 @@
 package com.f42o.api.account;
 
+import com.f42o.api.exception.InsufficientFundsException;
+import com.f42o.api.exception.InvalidAmountException;
 import com.f42o.api.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
+@ExtendWith(MockitoExtension.class)
 class BankAccountTest {
 
 
     @Mock
     private User user;
-
+    BankAccount bankAccount;
     @BeforeEach
-    public void inicializaMocks() {
-        MockitoAnnotations.initMocks(this);
+    public void setUp() {
+        bankAccount = new BankAccount(user);
     }
 
     @Test
     public void shouldBeAValidAlias() {
-        BankAccount account = new BankAccount(user);
-        assertEquals(3, account.getALIAS().split("\\.").length);
+        assertEquals(3, bankAccount.getALIAS().split("\\.").length);
     }
     @Test
     public void shouldBeAValidCBU() {
-        BankAccount account = new BankAccount(user);
-        System.out.println(account.getCBU());
-        assertEquals(20, account.getCBU().length());
+        assertEquals(20, bankAccount.getCBU().length());
     }
 
     @Test
     public void shouldHaveAlias(){
-        BankAccount account = new BankAccount(user);
-        assertNotNull(account.getALIAS());
+        assertNotNull(bankAccount.getALIAS());
     }
     @Test
     public void shouldHaveCBU(){
-        BankAccount account = new BankAccount(user);
-        assertNotNull(account.getCBU());
+        assertNotNull(bankAccount.getCBU());
     }
 
     @Test
     public void shouldHaveClient(){
-        BankAccount account = new BankAccount(user);
-        assertNotNull(account.getClient());
+        assertNotNull(bankAccount.getClient());
     }
 
     @Test
     public void balanceShouldNotBeNull(){
-        BankAccount account = new BankAccount(user);
-        assertNotNull(account.getBalance());
+        assertNotNull(bankAccount.getBalance());
     }
     @Test
     public void shouldNotSetNegativeBalance() {
-        BankAccount account = new BankAccount(user);
-        account.setBalance(new BigDecimal(-12));
-        assertEquals(BigDecimal.ZERO, account.getBalance());
+        bankAccount.setBalance(new BigDecimal(-12));
+        assertEquals(BigDecimal.ZERO, bankAccount.getBalance());
     }
 
 
     @Test
     public void shouldSetPositiveBalance() {
-        BankAccount account = new BankAccount(user);
-        account.setBalance(new BigDecimal(1200));
-        assertEquals(BigDecimal.valueOf(1200), account.getBalance());
+        bankAccount.setBalance(new BigDecimal(1200));
+        assertEquals(BigDecimal.valueOf(1200), bankAccount.getBalance());
     }
 
 
     @Test
     public void shouldNotDepositNegativeAmount(){
-        BankAccount account = new BankAccount(user);
-        BigDecimal expected = account.getBalance();
-        account.deposit(new BigDecimal(-1299));
-        assertEquals(expected,account.getBalance());
+        BigDecimal amount = BigDecimal.valueOf(-1299);
+        BigDecimal expected = bankAccount.getBalance();
+        assertThrows(InvalidAmountException.class,()->
+                bankAccount.deposit(amount)
+        );
+        assertEquals(expected,bankAccount.getBalance());
     }
 
     @Test
     public void shouldDepositPositiveAmount(){
-        BankAccount account = new BankAccount(user);
         BigDecimal amount = BigDecimal.valueOf(1500);
         BigDecimal expected = BigDecimal.valueOf(1500);
-        account.deposit(amount);
-        assertEquals(expected,account.getBalance());
+        bankAccount.deposit(amount);
+        assertEquals(expected,bankAccount.getBalance());
 
     }
 
     @Test
     public void shouldWithdrawValidAmount(){
-        BankAccount account = new BankAccount(user);
         BigDecimal amount = BigDecimal.valueOf(1500);
         BigDecimal expected = BigDecimal.valueOf(1500);
-        account.setBalance(BigDecimal.valueOf(3000));
-        account.withdraw(amount);
-        assertEquals(expected,account.getBalance());
+        bankAccount.setBalance(BigDecimal.valueOf(3000));
+        bankAccount.withdraw(amount);
+        assertEquals(expected,bankAccount.getBalance());
     }
 
     @Test
     public void shouldCannotWithdraw(){
-        BankAccount account = new BankAccount(user);
         BigDecimal amount = BigDecimal.valueOf(1500);
-        account.setBalance(BigDecimal.valueOf(1200));
-        BigDecimal expected = account.getBalance();
-        account.withdraw(amount);
-        assertEquals(expected,account.getBalance());
+        bankAccount.setBalance(BigDecimal.valueOf(1200));
+        BigDecimal expected = bankAccount.getBalance();
+        assertThrows(InsufficientFundsException.class,()->
+                bankAccount.withdraw(amount)
+        );
+
+        assertEquals(expected,bankAccount.getBalance());
     }
 
 }

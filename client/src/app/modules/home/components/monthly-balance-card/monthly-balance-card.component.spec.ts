@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MonthlyBalanceCardComponent } from './monthly-balance-card.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('MonthlyBalanceCardComponent', () => {
   let component: MonthlyBalanceCardComponent;
@@ -8,7 +10,8 @@ describe('MonthlyBalanceCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MonthlyBalanceCardComponent]
+      declarations: [MonthlyBalanceCardComponent],
+      imports: [HttpClientModule, HttpClientTestingModule],
     });
     fixture = TestBed.createComponent(MonthlyBalanceCardComponent);
     component = fixture.componentInstance;

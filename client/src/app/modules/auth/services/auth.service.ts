@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, Observable, OperatorFunction, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
-import { User } from 'src/app/models/user';
+import { BehaviorSubject, Observable, catchError, switchMap, tap, throwError } from 'rxjs';
 import { LoginRequest } from 'src/app/models/login-request';
-import { environment } from 'src/environments/environment';
 import { RegisterRequest } from 'src/app/models/register-request';
+import { User } from 'src/app/models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +84,15 @@ export class AuthService {
 
   isLoggedIn() {
     const token = this.cookie.get('token');
-    return token !== '' && token !== null;
+    if(token !== '' && token !== null){
+      const tokenExpiration = new Date(this.decodeToken(token).exp*1000)
+      const currentDate = new Date();
+      console.log(currentDate>tokenExpiration)
+      console.log(tokenExpiration)
+      console.log(currentDate)
+      return currentDate<tokenExpiration;
+    }
+    return false;
   }
 
   userAlreadyExist(credentialNumber:string){

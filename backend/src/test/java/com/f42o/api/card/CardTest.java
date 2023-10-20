@@ -18,34 +18,33 @@ class CardTest {
     @Mock
     BankAccount bankAccount;
 
+    Card card;
     @BeforeEach
-    public void inicializaMocks() {
-        MockitoAnnotations.initMocks(this);
+    public void setUp() {
+
+        card = new Card("Juan Perez",bankAccount);
+
     }
 
 
     @Test
     public void shouldBeAValidCVV(){
-        Card card = new Card("Juan Perez",bankAccount);
         assertEquals(3, card.getCVV().length());
     }
 
     @Test
     public void shouldBeAValidCardNumber(){
-        Card card = new Card("Juan Perez",bankAccount);
         assertEquals(16, card.getCardNumber().length());
     }
 
     @Test
     public void expireDateMustBeInFiveYears(){
-        Card card = new Card("Juan Perez",bankAccount);
         LocalDate expected = LocalDate.now().plus(Period.ofYears(5));
         assertEquals(expected, card.getExpirationDate());
     }
 
     @Test
     public void cardShouldBeEnabled(){
-        Card card = new Card("Juan Perez",bankAccount);
         assertTrue(card.isEnabled());
     }
 
