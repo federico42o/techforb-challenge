@@ -7,6 +7,7 @@ import { ButtonLoaderComponent } from './shared/components/button-loader/button-
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   {
     path: 'auth',
     canActivate:[NoLoginGuard],
@@ -20,7 +21,7 @@ const routes: Routes = [
     loadChildren: () =>
     import('./modules/home/home.module').then((m) => m.HomeModule),
   },
-  {path:"loader",component:ButtonLoaderComponent}
+  
 
 ];
 
